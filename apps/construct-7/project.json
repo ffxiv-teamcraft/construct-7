@@ -1,0 +1,93 @@
+{
+  "projectType": "application",
+  "sourceRoot": "apps/construct-7/src",
+  "prefix": "constructmon",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/construct-7",
+        "index": "apps/construct-7/src/index.html",
+        "main": "apps/construct-7/src/main.ts",
+        "polyfills": "apps/construct-7/src/polyfills.ts",
+        "tsConfig": "apps/construct-7/tsconfig.app.json",
+        "inlineStyleLanguage": "less",
+        "assets": [
+          "apps/construct-7/src/favicon.ico",
+          "apps/construct-7/src/assets"
+        ],
+        "styles": ["apps/construct-7/src/styles.less"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/construct-7/src/environments/environment.ts",
+              "with": "apps/construct-7/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "construct-7:build:production"
+        },
+        "development": {
+          "browserTarget": "construct-7:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "construct-7:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/construct-7/**/*.ts",
+          "apps/construct-7/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/construct-7"],
+      "options": {
+        "jestConfig": "apps/construct-7/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
