@@ -13,7 +13,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "constructmon",
+            "prefix": "c7",
             "style": "camelCase"
           }
         ],
@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "constructmon",
+            "prefix": "c7",
             "style": "kebab-case"
           }
         ]

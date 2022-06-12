@@ -5,7 +5,7 @@
     "defaultBase": "master"
   },
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "yarn"
   },
   "implicitDependencies": {
     "package.json": {
@@ -44,5 +44,6 @@
     "@nrwl/angular:component": {
       "style": "less"
     }
-  }
+  },
+  "defaultProject": "construct-7-electron"
 }

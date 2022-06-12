@@ -1,1 +1,61 @@
-<constructmon-nx-welcome></constructmon-nx-welcome>
+<div nz-col [nzSpan]="24" class="topbar">
+  TODO FILTER INPUT, VARIOUS CONTROLS
+</div>
+<div nz-row class="packets">
+  <div nz-col [nzSpan]="12">
+    <nz-table
+      *ngIf="packetsDisplay$ | async as packets"
+      #messagesTable
+      [nzBordered]="true"
+      nzSize="small"
+      [nzVirtualItemSize]="39"
+      [nzVirtualMinBufferPx]="400"
+      [nzVirtualMaxBufferPx]="800"
+      [nzData]="packets"
+      [nzVirtualForTrackBy]="trackByMessage"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="false"
+      [nzScroll]="{y: '390px'}"
+      nzHideOnSinglePage>
+      <thead>
+      <tr>
+        <th nzLeft nzWidth="40px">S/C</th>
+        <th nzLeft nzWidth="80px">OpCode</th>
+        <th>Packet</th>
+        <th nzWidth="80px">Size</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-template nz-virtual-scroll let-message let-index="index">
+        <tr class="packet-{{message.header.operation}}" [class.odd]="index % 2 === 1" (click)="selectPacket(message)">
+          <td nzLeft>{{message.header.operation === 'send' ? 'C' : 'S'}}</td>
+          <td nzLeft>{{message.opcode | hex:4}}</td>
+          <td>{{message.type}}<span *ngIf="message.subType">#{{message.subType}}</span></td>
+          <td>{{message.header.size}}</td>
+        </tr>
+      </ng-template>
+      </tbody>
+    </nz-table>
+  </div>
+  <div nz-col [nzSpan]="12">
+    <nz-card nzTitle="Details" class="details-card" nzSize="small">
+      <div *ngIf="selectedPacket$ | async as packet; else empty">
+        <pre *ngIf="packet.parsedIpcData">
+          {{packet | packetJson}}
+        </pre>
+      </div>
+      <ng-template #empty>
+        <nz-empty nzNotFoundContent="No selected packet"></nz-empty>
+      </ng-template>
+    </nz-card>
+  </div>
+
+</div>
+<nz-card class="details-card dissector-card" nzTitle="Dissector">
+  <div *ngIf="selectedPacket$ | async as packet; else empty">
+    <c7-dissector [message]="packet"></c7-dissector>
+  </div>
+  <ng-template #empty>
+    <nz-empty nzNotFoundContent="No selected packet"></nz-empty>
+  </ng-template>
+</nz-card>

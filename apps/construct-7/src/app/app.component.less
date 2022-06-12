@@ -1,0 +1,58 @@
+:host ::ng-deep {
+  .cdk-virtual-scroll-viewport {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .ant-table {
+    overflow-x: hidden;
+    height: 100%;
+  }
+}
+
+.packet-send {
+  cursor: pointer;
+
+  td {
+    background-color: rgba(169, 253, 245, 0.1);
+  }
+
+  &.odd {
+    td {
+      background-color: rgba(169, 253, 245, 0.15);
+    }
+  }
+}
+
+.packet-receive {
+  cursor: pointer;
+
+  td {
+    background-color: rgba(255, 245, 137, 0.1);
+  }
+
+  &.odd {
+    td {
+      background-color: rgba(255, 245, 137, 0.15);
+    }
+  }
+}
+
+@topbar-height: 40px;
+@packets-height: 400px;
+
+.topbar {
+  height: @topbar-height;
+}
+
+.packets {
+  height: @packets-height;
+}
+
+.details-card {
+  height: @packets-height;
+}
+
+.dissector-card {
+  height: ~"calc(100vh - @{topbar-height} - @{packets-height})";
+}

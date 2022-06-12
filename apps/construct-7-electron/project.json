@@ -1,0 +1,53 @@
+{
+  "root": "apps/construct-7-electron",
+  "sourceRoot": "apps/construct-7-electron/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx-electron:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/construct-7-electron",
+        "main": "apps/construct-7-electron/src/main.ts",
+        "tsConfig": "apps/construct-7-electron/tsconfig.app.json",
+        "assets": ["apps/construct-7-electron/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/construct-7-electron/src/environments/environment.ts",
+              "with": "apps/construct-7-electron/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "nx-electron:execute",
+      "options": {
+        "buildTarget": "construct-7-electron:build"
+      }
+    },
+    "package": {
+      "executor": "nx-electron:package",
+      "options": {
+        "name": "construct-7-electron",
+        "frontendProject": "construct-7",
+        "outputPath": "dist/packages",
+        "prepackageOnly": true
+      }
+    },
+    "make": {
+      "executor": "nx-electron:make",
+      "options": {
+        "name": "construct-7-electron",
+        "frontendProject": "construct-7",
+        "outputPath": "dist/executables"
+      }
+    }
+  }
+}

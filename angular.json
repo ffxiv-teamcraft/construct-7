@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "construct-7": "apps/construct-7",
-    "construct-7-e2e": "apps/construct-7-e2e"
+    "construct-7-e2e": "apps/construct-7-e2e",
+    "construct-7-electron": "apps/construct-7-electron"
   }
 }

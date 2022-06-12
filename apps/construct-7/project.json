@@ -1,7 +1,7 @@
 {
   "projectType": "application",
   "sourceRoot": "apps/construct-7/src",
-  "prefix": "constructmon",
+  "prefix": "c7",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -17,7 +17,10 @@
           "apps/construct-7/src/favicon.ico",
           "apps/construct-7/src/assets"
         ],
-        "styles": ["apps/construct-7/src/styles.less"],
+        "styles": [
+          "node_modules/ng-zorro-antd/ng-zorro-antd.dark.less",
+          "apps/construct-7/src/styles.less"
+        ],
         "scripts": []
       },
       "configurations": {
