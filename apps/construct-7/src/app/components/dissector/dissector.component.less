@@ -1,0 +1,60 @@
+.cell {
+  cursor: default;
+  position: relative;
+  padding: 5px;
+  font-family: 'Roboto Mono', monospace;
+
+  &.selected {
+    background-color: rgba(28, 120, 203, 0.4);
+  }
+}
+
+.border-left {
+  border-left: 1px solid rgba(255, 255, 255, .6);
+}
+
+.row-index {
+  padding-right: 10px;
+}
+
+.left-block {
+  overflow: auto;
+}
+
+@struct-border-color: rgba(255, 68, 68, 0.48);
+
+.struct-start {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  border-color: @struct-border-color;
+}
+
+.struct-end {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  border-color: @struct-border-color;
+}
+
+.struct-body {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: @struct-border-color;
+}
+
+.struct-block {
+  border: 1px solid @struct-border-color;
+}
+
+.struct-label {
+  position: absolute;
+  font-size: 11px;
+  line-height: 11px;
+  padding: 1px;
+  border-top-right-radius: 1px;
+  border-top-left-radius: 1px;
+  top: -5px;
+  right: -1px;
+  background-color: @struct-border-color;
+}

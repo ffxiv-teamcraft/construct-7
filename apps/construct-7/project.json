@@ -15,7 +15,12 @@
         "inlineStyleLanguage": "less",
         "assets": [
           "apps/construct-7/src/favicon.ico",
-          "apps/construct-7/src/assets"
+          "apps/construct-7/src/assets",
+          {
+            "glob": "**/*",
+            "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+            "output": "/assets/"
+          }
         ],
         "styles": [
           "node_modules/ng-zorro-antd/ng-zorro-antd.dark.less",

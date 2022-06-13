@@ -1,0 +1,86 @@
+<div nz-row *ngIf="gridDisplay$ | async as grid">
+  <div nz-col [nzSpan]="12" class="left-block">
+    <div nz-row>
+      <table nz-col [nzSpan]="16" class="hex-grid">
+        <thead>
+        <tr>
+          <th></th>
+          <th>00</th>
+          <th>01</th>
+          <th>02</th>
+          <th>03</th>
+          <th class="border-left">04</th>
+          <th>05</th>
+          <th>06</th>
+          <th>07</th>
+          <th class="border-left">08</th>
+          <th>09</th>
+          <th>0A</th>
+          <th>0B</th>
+          <th class="border-left">0C</th>
+          <th>0D</th>
+          <th>0E</th>
+          <th>0F</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let chunk of grid.grid; index as i">
+          <td class="row-index">{{(i * 16) | hex:8: false}}</td>
+          <td *ngFor="let cell of chunk; index as j"
+              class="cell"
+              [class.selected]="grid.selectedOffset === i * 16 + j"
+              [class.border-left]="j > 0 && j % 4 === 0"
+              [class.struct-start]="cell.struct?.type === 'start'"
+              [class.struct-body]="cell.struct?.type === 'body'"
+              [class.struct-end]="cell.struct?.type === 'end'"
+              (click)="selectOffset(i, j)">
+            <span *ngIf="cell.struct?.label" class="struct-label">{{cell.struct.label}}</span>
+            {{cell.value | hex:2:false}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <table nz-col [nzSpan]="8" class="string-display">
+        <tbody *ngIf="struct$ | async as struct">
+        <tr *ngFor="let chunk of grid.grid; index as i">
+          <td *ngFor="let cell of chunk; index as j"
+              class="cell" [class.selected]="grid.selectedOffset === i * 16 + j"
+              (click)="selectOffset(i, j)">{{cell.value | string}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div nz-col [nzSpan]="12" class="value-display">
+    <ng-container *ngIf="selectedOffsetDataDisplay$ | async as display">
+      <nz-table #displayTable [nzData]="display" [nzFrontPagination]="false" [nzShowPagination]="false" nzSize="small">
+        <thead>
+        <tr>
+          <th nzLeft nzWidth="100px">Type</th>
+          <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of displayTable.data">
+          <td nzLeft>{{row.label}}</td>
+          <td>{{row.value}}</td>
+        </tr>
+        <tr>
+          <td nzLeft>
+            <nz-input-group nzSize="small">
+              <nz-select nzSize="small" nzShowSearch [ngModel]="selectedGameContent$ | async"
+                         (ngModelChange)="selectedGameContent$.next($event)">
+                <nz-option *ngFor="let endpoint of availableEndpoints" [nzValue]="endpoint"
+                           [nzLabel]="endpoint"></nz-option>
+              </nz-select>
+            </nz-input-group>
+          </td>
+          <td>{{selectedOffsetDataGameContent$ | async}}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </ng-container>
+  </div>
+</div>

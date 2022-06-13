@@ -38,11 +38,16 @@
   }
 }
 
-@topbar-height: 40px;
+@topbar-height: 32px;
 @packets-height: 400px;
 
 .topbar {
   height: @topbar-height;
+  display: flex;
+
+  .filter-input {
+    flex: 1 1 auto;
+  }
 }
 
 .packets {
@@ -51,6 +56,11 @@
 
 .details-card {
   height: @packets-height;
+
+  .details-container {
+    height: 100%;
+    overflow: auto;
+  }
 }
 
 .dissector-card {
