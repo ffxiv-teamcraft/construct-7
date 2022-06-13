@@ -2,17 +2,10 @@
   "$schema": "../../../../../node_modules/nx-electron/src/validation/maker.schema.json",
   "extraResources": [
     {
-      "from": "../../../../../node_modules/@ffxiv-teamcraft/pcap-ffxiv/lib/MachinaWrapper",
+      "from": "./node_modules/@ffxiv-teamcraft/pcap-ffxiv/lib/MachinaWrapper",
       "to": "MachinaWrapper",
       "filter": [
         "**/*"
-      ]
-    },
-    {
-      "from": "./desktop",
-      "to": "MachinaWrapper",
-      "filter": [
-        "**/*.exe"
       ]
     }
   ]

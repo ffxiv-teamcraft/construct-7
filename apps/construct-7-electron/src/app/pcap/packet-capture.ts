@@ -38,6 +38,7 @@ export class PacketCapture {
         }
       }
     };
+    log.log(App.isDevelopmentMode(), PacketCapture.MACHINA_EXE_PATH);
 
     if (!App.isDevelopmentMode()) {
       options.exePath = PacketCapture.MACHINA_EXE_PATH;

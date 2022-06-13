@@ -1,16 +1,28 @@
 {
-  "name": "constructmon",
-  "version": "0.0.0",
+  "name": "construct7",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "start": "concurrently \"nx serve construct-7\" \"nx serve construct-7-electron\"",
     "build": "nx build construct-7 && nx build construct-7-electron",
-    "test": "nx test"
+    "test": "nx test",
+    "package": "yarn build && nx run construct-7-electron:make"
   },
   "private": true,
   "dependencies": {
+    "rxjs": "~7.4.0",
+    "@ffxiv-teamcraft/pcap-ffxiv": "^0.10.1",
+    "electron-log": "^4.4.7",
+    "tslib": "^2.0.0",
+    "electron-store": "^7.0.3"
+  },
+  "devDependencies": {
+    "@nrwl/angular": "14.2.4",
+    "ng-zorro-antd": "^13.2.2",
+    "tslib": "^2.0.0",
+    "zone.js": "~0.11.4",
     "@angular/animations": "~14.0.0",
     "@angular/common": "~14.0.0",
     "@angular/compiler": "~14.0.0",
@@ -19,14 +31,6 @@
     "@angular/platform-browser": "~14.0.0",
     "@angular/platform-browser-dynamic": "~14.0.0",
     "@angular/router": "~14.0.0",
-    "@ffxiv-teamcraft/pcap-ffxiv": "^0.10.1",
-    "@nrwl/angular": "14.2.4",
-    "ng-zorro-antd": "^13.2.2",
-    "rxjs": "~7.4.0",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.11.4"
-  },
-  "devDependencies": {
     "@angular-devkit/build-angular": "~14.0.0",
     "@angular-eslint/eslint-plugin": "~13.2.1",
     "@angular-eslint/eslint-plugin-template": "~13.2.1",
@@ -49,7 +53,6 @@
     "concurrently": "^7.2.1",
     "cypress": "^9.1.0",
     "electron": "^19.0.4",
-    "electron-log": "^4.4.7",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
