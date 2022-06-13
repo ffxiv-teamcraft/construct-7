@@ -15,6 +15,9 @@ export const Filters: Record<string, (message: Message, param: string) => boolea
     return message.opcode === Number(opcode);
   },
   type: (message: Message, type: string) => {
+    if (type.endsWith("*")) {
+      return message.type.startsWith(type.replace("*", ""));
+    }
     return message.type === type;
   },
   uint32: (message: Message, value: string) => {
@@ -63,6 +66,6 @@ export const Filters: Record<string, (message: Message, param: string) => boolea
     if (!value || !message.data) {
       return true;
     }
-    return message.data.toString('utf8').includes(value) || message.data.toString('ascii').includes(value);
+    return message.data.toString("utf8").includes(value) || message.data.toString("ascii").includes(value);
   }
 };

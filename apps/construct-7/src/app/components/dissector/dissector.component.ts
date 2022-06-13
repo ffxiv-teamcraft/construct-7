@@ -191,6 +191,8 @@ export class DissectorComponent {
         return 4;
       case "UInt64":
         return 8;
+      case "String":
+        return +params;
       default:
         return 1;
     }

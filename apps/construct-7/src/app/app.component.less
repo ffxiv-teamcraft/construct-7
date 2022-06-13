@@ -1,3 +1,6 @@
+@topbar-height: 32px;
+@packets-height: 400px;
+
 :host ::ng-deep {
   .cdk-virtual-scroll-viewport {
     overflow-x: hidden;
@@ -7,6 +10,27 @@
   .ant-table {
     overflow-x: hidden;
     height: 100%;
+  }
+
+  .details-card {
+    height: @packets-height;
+
+    .ant-card-body {
+      height: ~"calc(100% - 40px)";
+    }
+
+    .details-container {
+      height: 100%;
+      overflow: auto;
+    }
+  }
+
+  .dissector-card {
+
+    .ant-card-body {
+      height: ~"calc(100% - 60px)";
+      overflow: auto;
+    }
   }
 }
 
@@ -38,9 +62,6 @@
   }
 }
 
-@topbar-height: 32px;
-@packets-height: 400px;
-
 .topbar {
   height: @topbar-height;
   display: flex;
@@ -56,15 +77,6 @@
 
 .packets {
   height: @packets-height;
-}
-
-.details-card {
-  height: @packets-height;
-
-  .details-container {
-    height: 100%;
-    overflow: auto;
-  }
 }
 
 .dissector-card {

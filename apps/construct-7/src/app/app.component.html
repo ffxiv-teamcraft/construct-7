@@ -78,7 +78,7 @@
   </div>
 
 </div>
-<nz-card class="details-card dissector-card" nzTitle="Dissector">
+<nz-card class="dissector-card" nzTitle="Dissector ({{(selectedPacket$ | async)?.type}})">
   <div *ngIf="selectedPacket$ | async as packet; else empty">
     <c7-dissector [message]="packet"></c7-dissector>
   </div>
