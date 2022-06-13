@@ -1,14 +1,43 @@
 <div nz-col [nzSpan]="24" class="topbar">
-  TODO FILTER INPUT, VARIOUS CONTROLS
+  <div>
+    <nz-button-group>
+      <button nz-button [disabled]="running$ | async" [nzType]="'primary'" (click)="startPcap()"
+              nz-tooltip nzTooltipTitle="Start capture">
+        <i nz-icon nzType="caret-right" nzTheme="outline"></i>
+      </button>
+      <button nz-button [disabled]="(running$ | async) === false" [nzType]="'default'" (click)="pausePcap()"
+              nz-tooltip nzTooltipTitle="Pause capture">
+        <i nz-icon nzType="pause" nzTheme="outline"></i>
+      </button>
+      <button nz-button [nzType]="'default'" (click)="clear()"
+              nz-tooltip nzTooltipTitle="Clear packets">
+        <i nz-icon nzType="clear" nzTheme="outline"></i>
+      </button>
+    </nz-button-group>
+  </div>
+  <ng-container *ngIf="filterAutocomplete$ | async as autoCompleteDataSource">
+    <input type="text" nz-input placeholder="filter"
+           [ngModel]="filterString$ | async"
+           (ngModelChange)="filterString$.next($event)"
+           [class.ng-invalid]="invalidFilterString$ | async"
+           [nzAutocomplete]="filterAutocomplete"
+           class="filter-input">
+    <nz-autocomplete [nzDataSource]="autoCompleteDataSource" nzBackfill #filterAutocomplete></nz-autocomplete>
+  </ng-container>
+
+  <div>
+    <button nz-button nzType="primary" (click)="filterString$.next('')">
+      <i nz-icon nzType="undo" nzTheme="outline"></i>
+    </button>
+  </div>
 </div>
 <div nz-row class="packets">
   <div nz-col [nzSpan]="12">
     <nz-table
       *ngIf="packetsDisplay$ | async as packets"
-      #messagesTable
       [nzBordered]="true"
       nzSize="small"
-      [nzVirtualItemSize]="39"
+      [nzVirtualItemSize]="25"
       [nzVirtualMinBufferPx]="400"
       [nzVirtualMaxBufferPx]="800"
       [nzData]="packets"
@@ -39,10 +68,8 @@
   </div>
   <div nz-col [nzSpan]="12">
     <nz-card nzTitle="Details" class="details-card" nzSize="small">
-      <div *ngIf="selectedPacket$ | async as packet; else empty">
-        <pre *ngIf="packet.parsedIpcData">
-          {{packet | packetJson}}
-        </pre>
+      <div *ngIf="selectedPacket$ | async as packet; else empty" class="details-container">
+        <pre *ngIf="packet.parsedIpcData">{{packet | packetJson}}</pre>
       </div>
       <ng-template #empty>
         <nz-empty nzNotFoundContent="No selected packet"></nz-empty>

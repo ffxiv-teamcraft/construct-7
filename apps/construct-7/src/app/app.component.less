@@ -1,3 +1,5 @@
+@import '../styles';
+
 :host ::ng-deep {
   .cdk-virtual-scroll-viewport {
     overflow-x: hidden;
@@ -47,6 +49,10 @@
 
   .filter-input {
     flex: 1 1 auto;
+
+    &.ng-invalid {
+      border: 1px solid @error-color;
+    }
   }
 }
 

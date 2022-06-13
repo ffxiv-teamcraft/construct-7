@@ -48,7 +48,8 @@ export class DissectorComponent {
       return of([]);
     })
   );
-  gridDisplay$ = combineLatest([this.data$, this.selectedOffset$, this.struct$]).pipe(
+
+  public gridDisplay$ = combineLatest([this.data$, this.selectedOffset$, this.struct$]).pipe(
     map(([data, selectedOffset, struct]) => {
       return {
         grid: chunk([...data].map((value, index) => {
@@ -139,7 +140,6 @@ export class DissectorComponent {
         const structArray = new Array(message.data.length - 1).fill(null);
         let offset = 0x28;
         const props = (ts.match(/(\w+): reader\./gmi) || []).map(prop => prop.split(":")[0]);
-        console.log(props);
         props
           .forEach(key => {
             const match = new RegExp(`${key}:\\s?\\w+\\.?(skip\\((\\d+)\\))?\\.next(\\w+)\\((\\w*)\\)`).exec(ts);

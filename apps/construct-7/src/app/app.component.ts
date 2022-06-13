@@ -36,16 +36,39 @@ export class AppComponent {
 
   selectedPacket$ = new ReplaySubject<Message>();
 
-  filterString$ = new ReplaySubject<string>();
+  filterString$ = new BehaviorSubject<string>("");
+
+  filterAutocomplete$ = this.filterString$.pipe(
+    map(filterString => {
+      return Object.keys(Filters)
+        .filter(key => key.includes(filterString.toLowerCase()))
+        .map(key => `${key}()`)
+    }),
+    startWith(Object.keys(Filters))
+  );
+
+  parsedFilter$ = this.filterString$.pipe(
+    map(filterStr => this.parseFilterString(filterStr))
+  );
+
+  invalidFilterString$ = combineLatest([this.parsedFilter$, this.filterString$]).pipe(
+    map(([parsed, baseString]) => {
+      return baseString.length > 0 && parsed.length === 0;
+    })
+  );
+
+  filterFn$ = this.parsedFilter$.pipe(
+    map(parsedFilter => this.makeFilter(parsedFilter))
+  );
 
   public packetsDisplay$ = combineLatest([
     this.packets$,
-    this.filterString$.pipe(
-      startWith("")
-    )
+    this.filterFn$
   ]).pipe(
-    map(([packets, filter]) => {
-      return this.filterPackets(packets, filter);
+    map(([packets, filterFn]) => {
+      return packets.filter(packet => {
+        return filterFn(packet);
+      });
     })
   );
 
@@ -72,21 +95,23 @@ export class AppComponent {
     this.clear$.next();
   }
 
-  private filterPackets(packets: Message[], filter: string): Message[] {
-    const filterFn = this.makeFilter(filter);
-    return packets.filter(packet => {
-      return filterFn(packet);
-    });
-  }
-
-  private makeFilter(filter: string): (packet: Message) => boolean {
+  private parseFilterString(filter: string): { filterName: string, param: string }[] {
     const blocks = filter.split(";");
     return blocks.reduce((acc, block) => {
       const match = /(\w+)\(([^)]+)\)/i.exec(block);
       if (match && Filters[match[1].toLowerCase()]) {
-        return message => acc(message) && Filters[match[1]](message, match[2]);
+        return [
+          ...acc,
+          { filterName: match[1].toLowerCase(), param: match[2] }
+        ];
       }
       return acc;
+    }, [] as { filterName: string, param: string }[]);
+  }
+
+  private makeFilter(parsedFilters: { filterName: string, param: string }[]): (packet: Message) => boolean {
+    return parsedFilters.reduce((acc, { filterName, param }) => {
+      return message => acc(message) && Filters[filterName](message, param);
     }, (_) => true);
   }
 }
