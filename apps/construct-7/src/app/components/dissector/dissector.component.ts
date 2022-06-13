@@ -27,7 +27,8 @@ export class DissectorComponent {
 
   private message$ = new ReplaySubject<Message>();
   private data$ = this.message$.pipe(
-    map(message => (message.data || []).slice(1) as Uint8Array)
+    // Slice 1 for the C/S bit in data and then 8 for ignored data in header
+    map(message => (message.data || []).slice(1 + 8) as Uint8Array)
   );
   private buffer$ = this.data$.pipe(
     map(data => Buffer.from(data))
@@ -138,7 +139,7 @@ export class DissectorComponent {
           return [];
         }
         const structArray = new Array(message.data.length - 1).fill(null);
-        let offset = 0x28;
+        let offset = 0x20;
         const props = (ts.match(/(\w+): reader\./gmi) || []).map(prop => prop.split(":")[0]);
         props
           .forEach(key => {
